@@ -1,0 +1,22 @@
+//Recursive search through working directory 
+//directories + subdirectories 
+//Credit:Shawn J. Goff 
+//(http://superuser.com/questions/31464/looping-through-ls-results-in-bash-shell-script)
+{
+
+find . -type d -exec echo '{}' \;
+
+}
+
+//List directory contents
+//Credit:Shawn J. Goff 
+//(http://superuser.com/questions/31464/looping-through-ls-results-in-bash-shell-script)
+{
+
+for dir in *; do
+  echo "$dir"
+done
+
+}
+
+

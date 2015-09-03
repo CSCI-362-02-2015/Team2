@@ -21,7 +21,7 @@ cat << newHTML.html | tee newHTML.html
 These are the full directories at the scripts home folder: <br><br/>
 <!--Recursive search through working directory (1)-->
 $(for dir in *; do
-  echo "$dir""<br></br>"
+  echo "$dir" "
 done
 )
 
