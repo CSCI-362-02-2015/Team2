@@ -1,9 +1,0 @@
-##This is a log for the team to keep track of commits
-#Please include date,your initials, daescription of the commit and the commit SHA
-#ex. (8/31/15 HSM: Initial Commit. SHA 18a4476...)
-
--9/2/15 HSM: Inital commit of myList.sh + deleted Team2 folder I accidently created when setting up git on my machine. (SHA 19a4476774d2b47bd92cf9b96016da40f7b6014a)
-
--9/2/15 HSM: Inital commit of TeamLog.txt + sample of html file created from myList.sh. (SHA 161d4c2ea14a1e80bc39ebfc78fac35e4a22ef0d)
-
-
