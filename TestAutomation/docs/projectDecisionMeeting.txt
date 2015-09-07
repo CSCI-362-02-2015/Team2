@@ -1,0 +1,21 @@
+September 6th, 2015 - Initial Idea Meeting
+
+Ushahidi-Crowd Source Rallying 
+----coded in php
+------http://www.ushahidi.com/
+
+Insteddd - umbrella organization
+--ResourceMap - tracks the location and distribution of resources
+----coded in Ruby
+------http://resourcemap.instedd.org/en
+
+--Veegio - a tool that makes collection of disease outbreak information simple and unified 
+----coded in Ruby
+------http://instedd.org/technologies/veegilo/
+
+WheelMap - Google Maps overlay pinpointing wheelchair accessible businesses
+----coded in JavaScript and Ruby on Rails
+------http://wheelmap.org/en/
+
+FrontLineSMS - 
+------http://www.frontlinesms.com/
