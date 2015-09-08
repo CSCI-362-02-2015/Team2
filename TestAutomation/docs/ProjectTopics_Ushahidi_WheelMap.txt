@@ -1,0 +1,19 @@
+Ushahidi (testimony) http://docs.ushahidi.org/developer-guide/adding-code.html 
+
+	A software platform that allows for quick collection and analysis of events provided through crowd-sourcing. 
+	Receives submissions via SMS, email, Twitter, and Ushahidi App.
+	Includes Data management and visualization tools and alerts.
+	API is available to be leveraged in outside apps
+
+	Developed in 2008 to map reports of post election violence in Kenya. 
+	Written in PHP, Linux, MySQL (backend) & JS, Angular, HTML/CSS
+
+
+WheelMap http://wheelmap.org/en/ 
+
+	An online map to search, find and mark wheelchair-accessible places. 
+	Gathers data through crowd-sourcing. Specific specifications are given in the app to assist people in rating a place.
+	Ratings are submitted via phone app (iPhone, Android)
+	API is available to be leveraged in outside apps
+
+	Written in Ruby
