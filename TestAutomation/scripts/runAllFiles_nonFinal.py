@@ -2,21 +2,39 @@
 import os
 import webbrowser
 import json
+import time
 from pprint import pprint
 
+htmlStr = ''
+topParent = getTopParent()
 
-def main():
-    saveFile = "testCaseResults.html"
-    htmlStr = ''
+def main():    
+    saveFile = "testCaseResults_{0}.html".format(getTimeStamp())    
     
     list_testFileNames = getTests()
     list_oracleFileNames = getOracles()
+    
     runTestCase(list_testFileNames, list_oraclsFileNames)
     createResults(saveFile)
+    openHtml(saveFile)
+
+def getTimeStamp():
+    timeStamp = ""
+    
+    currentTime = time.localtime()[:6]
+    
+    for element in currentTime:
+        if(len(str(element)) == 4):
+            timeStamp += str(element)
+        else:
+            timeStamp += "{0:0>2}".format(str(element))
+    return timeStamp    
+             
 
 def createResults(saveFile):
+    fileStr = topParent + "reports"
 
-    outFile = open(saveFile, 'w')
+    outFile = open(fileStr + "\\" + saveFile, 'w')
 
     outFile.write(
             '<!DOCTYPE html>' +
@@ -59,24 +77,16 @@ def createResults(saveFile):
             '</html>')
 
 def getTests():
-    '''get current directory'''	
-    str_dirPath = os.path.dirname(os.path.realpath(__file__))
+    fileStr = topParent + "testCases"
 
-    '''get top parent'''
-    str_topParent = str_dirPath[:(str_dirPath.index("scripts"))] + "testCases"
-
-    '''get files in parent directory as a comma delimited list'''
-    return os.listdir(str_topParent)
+    '''get test cases as a comma delimited list'''
+    return os.listdir(fileStr)
     
 def getOracles():
-    '''get current directory'''	
-    str_dirPath = os.path.dirname(os.path.realpath(__file__))
+    fileStr = topParent + "oracles"
 
-    '''get top parent'''
-    str_topParent = str_dirPath[:(str_dirPath.index("scripts"))] + "oracles"
-
-    '''get files in parent directory as a comma delimited list'''
-    return os.listdir(str_topParent)
+    '''get oracles as a comma delimited list'''
+    return os.listdir(fileStr)
     
 def runTestCase(fileNameList, oracleList):
     for fileName, oracleName in zip(fileNameList, oracleList):
@@ -93,47 +103,21 @@ def doTests(fileName, oracleName):
     infile = open(fileName, 'r')
     #parse JSON file
 
-    htmlStr += '<div class="accordion-inner" id="tc_{0}">' +
-                            '<div class="accordion" id="tcAccordion{0}">' +
-                                '<div class="accordion-group">' +
-                                    '<div class="accordion-heading">' +
-                                        '<a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0)" href="#tcDetailsPanel{0}">' +
-                                            '<div class="row">' +
-                                                '<div class="col-lg-2">' +
-                                                    '<p id="tc_id{0}">{0}</p>' +
-                                                '</div>' +
-                                                '<div class="col-lg-7">' +
-                                                    '<p id="tc_title{0}">{1}</p>' +
-                                                '</div>' +
-                                                '<div class="col-lg-3">' +
-                                                    '<p id="tc_status{0}">{2}</p>' +
-                                                '</div>' +
-                                            '</div>' +
-                                        '</a>' +
-                                    '</div>' +
-                                    '<div id="tcDetailsPanel{0}" class="accordion-body collapse">' +
-                                        '<div class="accordion-inner divShading-beige" id="tcDetails{0}">' +
-                                            '<div class="row">' +
-                                                '<div class="col-lg-12">' +
-                                                    '<p id="tc_req{0}"><strong>Requirement: </strong>{3}</p>' +
-                                                '</div>' +
-                                            '</div>' +
-                                            '<div class="row">' +
-                                                '<div class="col-lg-3 col-lg-offset-3">' +
-                                                    '<p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p>' +
-                                                '</div>' +
-                                                '<div class="col-lg-3">' +
-                                                    '<p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p>' +
-                                                '</div>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+    htmlStr += '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0)" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
-    
-        
+def openHtml(fileName):
+    fileStr = topParent + "reports"
+    url = 'file://' + os.path.realpath(fileStr + '\\' + fileName)
+    browser = 2
+
+    webbrowser.open(url, new=browser, autoraise=False)
+
+def getTopParent():
+    '''get current directory'''	
+    str_dirPath = os.path.dirname(os.path.realpath(__file__))
+
+    '''get top parent'''
+    return str_dirPath[:(str_dirPath.index("scripts"))]
         
 
 main()
