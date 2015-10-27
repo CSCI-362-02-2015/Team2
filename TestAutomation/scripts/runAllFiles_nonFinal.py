@@ -6,18 +6,20 @@ import time
 from pprint import pprint
 
 htmlStr = ''
-topParent = getTopParent()
+topParent = ''
 
-def main():    
+def main():
+    topParent = getTopParent()
     saveFile = "testCaseResults_{0}.html".format(getTimeStamp())    
     
     list_testFileNames = getTests()
     list_oracleFileNames = getOracles()
-    
+    print{list_oracleFileNames}
+    '''
     runTestCase(list_testFileNames, list_oraclsFileNames)
     createResults(saveFile)
     openHtml(saveFile)
-
+'''
 def getTimeStamp():
     timeStamp = ""
     
@@ -93,15 +95,17 @@ def runTestCase(fileNameList, oracleList):
         result = doTest(fileName, oracleName)
 
 def doTests(fileName, oracleName):
-    tc_id = ''
-    tc_title = ''
-    tc_req = ''
-    tc_testVal = ''
-    tc_oracle = ''
-    tc_result = ''
+    with open(fileName) as data_file:
+        data = json.load(data_file)
+    pprint(data)
     
-    infile = open(fileName, 'r')
-    #parse JSON file
+    tc_id = data["id"]
+    tc_title = data["title"]
+    tc_req = data["title"]
+    tc_testVal = data["testVal"]
+    tc_oracle = "x"
+    tc_result = "Passed" 
+    
 
     htmlStr += '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0)" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
