@@ -5,21 +5,16 @@ import json
 import time
 from pprint import pprint
 
-htmlStr = ''
-topParent = ''
-
 def main():
     topParent = getTopParent()
     saveFile = "testCaseResults_{0}.html".format(getTimeStamp())    
     
-    list_testFileNames = getTests()
-    list_oracleFileNames = getOracles()
-    print{list_oracleFileNames}
-    '''
-    runTestCase(list_testFileNames, list_oraclsFileNames)
-    createResults(saveFile)
-    openHtml(saveFile)
-'''
+    list_testFileNames = getTests(topParent)
+    list_oracleFileNames = getOracles(topParent)
+    htmlStr = runTestCase(topParent, list_testFileNames, list_oracleFileNames)
+    createResults(topParent, saveFile, htmlStr)
+    openHtml(topParent, saveFile)
+
 def getTimeStamp():
     timeStamp = ""
     
@@ -33,7 +28,49 @@ def getTimeStamp():
     return timeStamp    
              
 
-def createResults(saveFile):
+
+
+def getTests(topParent):
+    fileStr = topParent + "testCases"
+    '''get test cases as a comma delimited list'''
+    return os.listdir(fileStr)
+    
+def getOracles(topParent):
+    fileStr = topParent + "oracles"
+
+    '''get oracles as a comma delimited list'''
+    return os.listdir(fileStr)
+    
+def runTestCase(topParent, fileNameList, oracleList):
+    htmlStr = ""
+    for fileName, oracleName in zip(fileNameList, oracleList):
+        htmlStr += doTest(topParent + "testCases\\" + fileName, oracleName)
+    return htmlStr
+
+def doTest(fileName, oracleName):
+    '''
+    data = []
+    with open(fileName) as data_file:
+        for line in data_file:
+            data.append(json.loads(line))
+    
+    tc_id = data["id"]
+    tc_title = data["title"]
+    tc_req = data["req"]
+    tc_testVal = data["testVal"]
+    tc_oracle = "x"
+    tc_result = "Passed" 
+    '''
+    tc_id = "001"
+    tc_title = "One Variable and Positive Literal"
+    tc_req = ""
+    tc_testVal = "x + 2"
+    tc_oracle = "x + 2"
+    tc_result = "Passed" 
+
+    return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+
+def createResults(topParent, saveFile, htmlStr):
     fileStr = topParent + "reports"
 
     outFile = open(fileStr + "\\" + saveFile, 'w')
@@ -57,13 +94,13 @@ def createResults(saveFile):
                                     '<a class="">' +
                                         '<div class="row center">' +
                                             '<div class="col-lg-2">' +
-                                                '<h5 id="heading_id">ID</h5>' +
+                                                '<h5 id="heading_id"><strong>ID</strong></h5>' +
 					    '</div>' +
 					    '<div class="col-lg-7">' +
-                                                '<h5 id="heading_title">Title</h5>' +
+                                                '<h5 id="heading_title"><strong>Title</strong></h5>' +
 					    '</div>' +
 					    '<div class="col-lg-3">' +
-                                                '<h5 id="heading_status">Status</h5>' +
+                                                '<h5 id="heading_status"><strong>Status</strong></h5>' +
 					    '</div>' +
 					'</div>' +
 				    '</a>' +
@@ -78,38 +115,7 @@ def createResults(saveFile):
                 '</body>' +
             '</html>')
 
-def getTests():
-    fileStr = topParent + "testCases"
-
-    '''get test cases as a comma delimited list'''
-    return os.listdir(fileStr)
-    
-def getOracles():
-    fileStr = topParent + "oracles"
-
-    '''get oracles as a comma delimited list'''
-    return os.listdir(fileStr)
-    
-def runTestCase(fileNameList, oracleList):
-    for fileName, oracleName in zip(fileNameList, oracleList):
-        result = doTest(fileName, oracleName)
-
-def doTests(fileName, oracleName):
-    with open(fileName) as data_file:
-        data = json.load(data_file)
-    pprint(data)
-    
-    tc_id = data["id"]
-    tc_title = data["title"]
-    tc_req = data["title"]
-    tc_testVal = data["testVal"]
-    tc_oracle = "x"
-    tc_result = "Passed" 
-    
-
-    htmlStr += '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0)" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
-
-def openHtml(fileName):
+def openHtml(topParent, fileName):
     fileStr = topParent + "reports"
     url = 'file://' + os.path.realpath(fileStr + '\\' + fileName)
     browser = 2
