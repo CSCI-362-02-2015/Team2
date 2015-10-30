@@ -48,7 +48,6 @@ def runTestCase(topParent, fileNameList, oracleList):
 
 #compares testCases to oracles
 def doTest(fileName, oracleName):
-    print(fileName)
     data = []
     with open(fileName) as data_file:
         data = json.load(data_file)
@@ -57,10 +56,10 @@ def doTest(fileName, oracleName):
     tc_title = data["title"]
     tc_req = data["req"]
     tc_testVal = data["testVal"]
-    tc_oracle = "x"
+    tc_oracle = oracleName
     tc_result = "Passed" 
   
-    return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><p id="tc_oracle{0}"><strong>Oracle: </strong>{5}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+    return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
 #creates results HTML file
 def createResults(topParent, saveFile, htmlStr):
@@ -78,6 +77,10 @@ def createResults(topParent, saveFile, htmlStr):
                     '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>' +
                     '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>' +
                     '<style>' +
+                            '.overflow-hidden{overflow:hidden;}' +
+                            '.font-size-large{font-size:large;}' +
+                            '.float-right{float:right;}' +
+                            '.margin-top-4p{margin-top:4px;}' +
                             '.margin-top-n15p{margin-top:-15px;}' +
                             '.background-color-aliceblue{background-color:aliceblue;}' +
                             '.accordion-heading{text-align:center;}' +
@@ -124,6 +127,35 @@ def createResults(topParent, saveFile, htmlStr):
                         '</div>' +
                         '<div id="bottom"></div>' +
                     '</div>' +
+                    '<div class="modal fade" id="mdlOracle" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">' +
+                        '<div class="modal-dialog" role="document">' +
+                            '<div class="modal-content">' +
+                                '<div class="modal-header">' +
+                                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                                    '<h4 class="modal-title" id="mdlOracle_title"></h4>' +
+                                '</div>' +
+                                '<div class="modal-body">' +
+                                    '<div class="row"><span class="font-size-large float-right label" id="mdlOracle_status"></span></div>' +
+                                    '<div class="row">' +
+                                        '<div class="overflow-hidden col-lg-11"><img src="" id="mdlOracle_img"></img></div>' +
+                                    '</div>' +
+                                '</div>' +                       
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<script>' +
+                        '$("#mdlOracle").on("show.bs.modal", function (event) {' +
+                        'var button = $(event.relatedTarget);' +
+                        'var title = button.data("title");' +
+                        'var img = button.data("img");' +
+                        'var status = button.data("status");' +
+                        'var statusLabel = status == "Passed" ? "label-success" : "label-danger";' +
+                        '$("#mdlOracle_title").text(title);' +
+                        '$("#mdlOracle_img").attr("src", "../oracles/" + img);' +
+                        '$("#mdlOracle_status").text(status);' +
+                        '$("#mdlOracle_status").addClass(statusLabel);' +
+                        '});' +
+                    '</script>' +
                 '</body>' +
             '</html>')
 
