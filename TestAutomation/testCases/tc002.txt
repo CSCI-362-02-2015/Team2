@@ -1,1 +1,1 @@
-{"id": "002", "title" : "Fraction with Square Root and Exponent in Numerator", "req": "", "testVal": "x + 2"}
+{"id": "002", "title" : "Single variable and a Snegative number", "req": "Must display in line mathMode equation", "testVal": "$x-2$"}

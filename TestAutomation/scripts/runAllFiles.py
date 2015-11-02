@@ -5,6 +5,10 @@ import json
 import time
 from pprint import pprint
 
+from selenium import webdriver # pip install selenium
+from selenium.webdriver.common.keys import Keys
+from PIL import Image, ImageChops
+
 #main gets top parent of folder and runs all other functions
 def main():
     topParent = getTopParent()
@@ -12,7 +16,7 @@ def main():
     
     list_testFileNames = getTests(topParent)
     list_oracleFileNames = getOracles(topParent)
-    htmlStr = runTestCase(topParent, list_testFileNames, list_oracleFileNames)
+    htmlStr = runTestCases(topParent, list_testFileNames, list_oracleFileNames)
     createResults(topParent, saveFile, htmlStr)
     openHtml(topParent, saveFile)
 
@@ -40,26 +44,57 @@ def getOracles(topParent):
     return os.listdir(fileStr)
 
 #calls "doTest()" for testCases and oracles
-def runTestCase(topParent, fileNameList, oracleList):
+def runTestCases(topParent, fileNameList, oracleList):
+    def wait_until_load():
+        def page_has_loaded(): return driver.execute_script('return document.readyState;') == 'complete'
+        time.sleep(1)
+        count = 0
+        while not(page_has_loaded() or count==10):
+            time.sleep(0.25)
+            count+=1
+
+    def equal_images(im1, im2): return ImageChops.difference(im1, im2).getbbox() is None
+
+    #compares testCases to oracles
+    def doTest(file_path, file_name):
+        data = []
+        with open(file_path) as data_file:
+            data = json.load(data_file)
+        
+        tc_id = data["id"]
+        tc_title = data["title"]
+        tc_req = data["req"]
+        tc_testVal = data["testVal"]
+        tc_oracle = file_name.rstrip('.txt')+'.jpg'
+
+        oracle_path = topParent + "oracles/%s" % tc_oracle
+        result_path = topParent + "temp/testResults/%s" % tc_oracle
+        driver.find_element_by_id("MathInput").clear() #clear input box
+        driver.find_element_by_id("MathInput").send_keys(tc_testVal) #type testcase into box
+        driver.find_element_by_id("MathInput").send_keys(Keys.RETURN) #hit enter
+        wait_until_load()
+
+        # driver.get_screenshot_as_file(oracle_path) #save screenshot (oracle_path to save oracles) UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
+        # tc_result = "Passed" # UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
+
+        driver.get_screenshot_as_file(result_path) #save screenshot (result_path to test) UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
+        oracle_image, result_image = Image.open(oracle_path), Image.open(result_path) # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
+        tc_result = "Passed" if equal_images(oracle_image, result_image) else "Failed" # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
+      
+        return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-6 col-lg-offset-3 txt-align-center"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Test Value and Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+
+    driver = webdriver.Firefox()
+    # parent_dir_path = "%s/../" %os.path.dirname(os.path.abspath(__file__))
+    skeleton_file_path = topParent + "project/src/skeleton.html"
+    driver.get("file:///" + skeleton_file_path) #navigate to skeleton file
+    wait_until_load()
     htmlStr = ""
-    for fileName, oracleName in zip(fileNameList, oracleList):
-        htmlStr += doTest(topParent + "testCases\\" + fileName, oracleName)
+    for file_name in fileNameList:
+        file_path = topParent + "testCases\\" + file_name
+        htmlStr += doTest(file_path, file_name)
+    driver.quit()
     return htmlStr
 
-#builds parameters for testing
-def doTest(fileName, oracleName):
-    data = []
-    with open(fileName) as data_file:
-        data = json.load(data_file)
-    
-    tc_id = data["id"]
-    tc_title = data["title"]
-    tc_req = data["req"]
-    tc_testVal = data["testVal"]
-    tc_oracle = oracleName
-    tc_result = False
-  
-    return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-6 col-lg-offset-3 txt-align-center"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Test Value and Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
 #creates results HTML file
 def createResults(topParent, saveFile, htmlStr):
