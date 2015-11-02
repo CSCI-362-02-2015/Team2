@@ -73,15 +73,15 @@ def runTestCases(topParent, fileNameList, oracleList):
         driver.find_element_by_id("MathInput").send_keys(tc_testVal) #type testcase into box
         driver.find_element_by_id("MathInput").send_keys(Keys.RETURN) #hit enter
         wait_until_load()
-
-        # driver.get_screenshot_as_file(oracle_path) #save screenshot (oracle_path to save oracles) UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
-        # tc_result = "Passed" # UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
-
+        '''
+        driver.get_screenshot_as_file(oracle_path) #save screenshot (oracle_path to save oracles) UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
+        tc_result = "Passed" # UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
+        '''
         driver.get_screenshot_as_file(result_path) #save screenshot (result_path to test) UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         oracle_image, result_image = Image.open(oracle_path), Image.open(result_path) # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         tc_result = "Passed" if equal_images(oracle_image, result_image) else "Failed" # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
-      
-        return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-6 col-lg-offset-3 txt-align-center"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Test Value and Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+        
+        return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12 txt-align-center"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-6 col-lg-offset-3 txt-align-center"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Test Value and Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
     driver = webdriver.Firefox()
     # parent_dir_path = "%s/../" %os.path.dirname(os.path.abspath(__file__))
@@ -112,6 +112,11 @@ def createResults(topParent, saveFile, htmlStr):
                     '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>' +
                     '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>' +
                     '<style>' +
+                            '.mdl-panel-title{font-weight:bold; text-decoration:underline; text-align:center;}' +
+                            '.padding-left-25p{padding-left:25px;}' +
+                            '.border-right-shaded{border-right:2px solid #e5e5e5;}' +
+                            '.modal-85pct{width:85%;}' +
+                            '.txt-align-center{text-align:center;}' +
                             '.overflow-hidden{overflow:hidden;}' +
                             '.font-size-large{font-size:large;}' +
                             '.float-right{float:right;}' +
@@ -163,16 +168,22 @@ def createResults(topParent, saveFile, htmlStr):
                         '<div id="bottom"></div>' +
                     '</div>' +
                     '<div class="modal fade" id="mdlOracle" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">' +
-                        '<div class="modal-dialog" role="document">' +
+                        '<div class="modal-dialog modal-85pct" role="document">' +
                             '<div class="modal-content">' +
                                 '<div class="modal-header">' +
                                     '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-                                    '<h4 class="modal-title" id="mdlOracle_title"></h4>' +
+                                    '<h4 class="modal-title" id="mdlOracle_title"><span class="font-size-large label" id="mdlOracle_status"></span></h4>' +
                                 '</div>' +
                                 '<div class="modal-body">' +
-                                    '<div class="row"><span class="font-size-large float-right label" id="mdlOracle_status"></span></div>' +
                                     '<div class="row">' +
-                                        '<div class="overflow-hidden col-lg-11"><img src="" id="mdlOracle_img"></img></div>' +
+                                        '<div class="col-lg-6 border-right-shaded">' +
+                                            '<h4 class="mdl-panel-title">Test:</h4>' +
+                                            '<div class="overflow-hidden col-lg-11 padding-left-25p"><img id="mdlTest_img" src="" /></div>' +
+					'</div>' +
+					'<div class="col-lg-6">' +
+                                            '<h4 class="mdl-panel-title">Oracle:</h4>' +
+                                            '<div class="overflow-hidden col-lg-11 padding-left-25p"><img id="mdlOracle_img" src=""></div>' +
+					'</div>' +
                                     '</div>' +
                                 '</div>' +                       
                             '</div>' +
@@ -180,15 +191,16 @@ def createResults(topParent, saveFile, htmlStr):
                     '</div>' +
                     '<script>' +
                         '$("#mdlOracle").on("show.bs.modal", function (event) {' +
-                        'var button = $(event.relatedTarget);' +
-                        'var title = button.data("title");' +
-                        'var img = button.data("img");' +
-                        'var status = button.data("status");' +
-                        'var statusLabel = status == "Passed" ? "label-success" : "label-danger";' +
-                        '$("#mdlOracle_title").text(title);' +
-                        '$("#mdlOracle_img").attr("src", "../oracles/" + img);' +
-                        '$("#mdlOracle_status").text(status);' +
-                        '$("#mdlOracle_status").addClass(statusLabel);' +
+                            'var button = $(event.relatedTarget);' +
+                            'var title = button.data("title");' +
+                            'var img = button.data("img");' +
+                            'var status = button.data("status");' +
+                            'var statusLabel = status == "Passed" ? "label-success" : "label-danger";' +
+                            '$("#mdlOracle_title").html(title + "&nbsp;&nbsp;&nbsp;" + $("#mdlOracle_title").html());' +
+                            '$("#mdlOracle_img").attr("src", "../oracles/" + img);' +
+                            '$("#mdlTest_img").attr("src", "../temp/testResults/" + img);' +
+                            '$("#mdlOracle_status").text(status);' +
+                            '$("#mdlOracle_status").addClass(statusLabel);' +
                         '});' +
                     '</script>' +
                 '</body>' +
