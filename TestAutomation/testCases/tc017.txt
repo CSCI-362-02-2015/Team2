@@ -1,0 +1,1 @@
+{"id": "017", "title" : "2 variables and positive number", "req": "Must display out of line mathMode equation", "testVal": "$$x + 2y$$"}
