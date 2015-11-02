@@ -46,7 +46,7 @@ def runTestCase(topParent, fileNameList, oracleList):
         htmlStr += doTest(topParent + "testCases\\" + fileName, oracleName)
     return htmlStr
 
-#compares testCases to oracles
+#builds parameters for testing
 def doTest(fileName, oracleName):
     data = []
     with open(fileName) as data_file:
@@ -57,9 +57,15 @@ def doTest(fileName, oracleName):
     tc_req = data["req"]
     tc_testVal = data["testVal"]
     tc_oracle = oracleName
-    tc_result = "Passed" 
+    tc_result = compareImg(tc_testVal, oracleName)
   
     return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-2"><p id="tc_id{0}">{0}</p></div><div class="col-lg-7"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-3 col-lg-offset-3"><p id="tc_testVal{0}"><strong>Test Value: </strong>{4}</p></div><div class="col-lg-3"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
+
+#compares test to oracle
+def compareImg(testVal, oracle):
+    result;
+
+    return result;
 
 #creates results HTML file
 def createResults(topParent, saveFile, htmlStr):
