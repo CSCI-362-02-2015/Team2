@@ -1,1 +1,1 @@
-{"id": "023", "title" : "String, 1 variable equation with positive integer, String", "req": "Must display out of line mathMode equation", "testVal": "Hello $$x + 2$$ World"}
+{"id": "023", "title" : "String, 1 variable equation with positive integer, String", "req": "Must display out of line mathMode equation", "testVal": "Hello x + 2 World"}

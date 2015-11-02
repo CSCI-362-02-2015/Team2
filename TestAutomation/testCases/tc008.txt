@@ -1,1 +1,1 @@
-{"id": "008", "title" : "2 variables, 1 exponent, and negative integer", "req": "Must display in line mathMode equation", "testVal": "$x^2 - 2y$"}
+{"id": "008", "title" : "2 variables, 1 exponent, and negative integer", "req": "Must display in line mathMode equation", "testVal": "x^2 - 2y"}

@@ -1,1 +1,0 @@
-{"id": "025", "title" : "String, 1 variable equation with negative integer over variable with exponent, String", "req": "Must display out of line mathMode equation", "testVal": "Hello $x - 2 \over x^2$ World"}

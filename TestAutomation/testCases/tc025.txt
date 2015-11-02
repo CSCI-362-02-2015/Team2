@@ -1,1 +1,1 @@
-{"id": "025", "title" : "String, 3 variable, 1 exponent equation with negative integer String", "req": "Must display out of line mathMode equation", "testVal": "Hello $xy - 2x^2$ World"}
+{"id": "025", "title" : "String, 3 variable, 1 exponent equation with negative integer String", "req": "Must display out of line mathMode equation", "testVal": "Hello xy - 2x^2 World"}

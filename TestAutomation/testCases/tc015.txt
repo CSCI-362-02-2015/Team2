@@ -1,1 +1,1 @@
-{"id": "015", "title" : "Variable with exponent and positive integer", "req": "Must display out of line mathMode equation", "testVal": "$$x^2 + 2$$"}
+{"id": "015", "title" : "Variable with exponent and positive integer", "req": "Must display out of line mathMode equation", "testVal": "x^2 + 2"}
