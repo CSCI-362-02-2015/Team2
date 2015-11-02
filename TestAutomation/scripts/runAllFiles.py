@@ -95,7 +95,6 @@ def runTestCases(topParent, fileNameList, oracleList):
     driver.quit()
     return htmlStr
 
-
 #creates results HTML file
 def createResults(topParent, saveFile, htmlStr):
     fileStr = topParent + "reports"
