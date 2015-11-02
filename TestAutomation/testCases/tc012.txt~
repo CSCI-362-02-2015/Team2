@@ -1,0 +1,1 @@
+{"id": "012", "title" : "String, 1 variable equation with negative integer, String", "req": "Must display in line mathMode equation", "testVal": "Hello $x - 2$ World"}

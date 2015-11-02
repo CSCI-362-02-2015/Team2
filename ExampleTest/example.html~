@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>ls -al ~/.ssh
+<title>MathJax TeX Test Page</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+	src="./MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</head>
+<body>
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+
+$$y = 7\pm 5 $$
+
+$x = (7+8) / x^y+9$
+</body>
+</html>

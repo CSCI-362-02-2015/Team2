@@ -1,0 +1,1 @@
+{"id": "007", "title" : "2 variables, 1 exponent, and positive integer", "req": "Must display in line mathMode equation", "testVal": "$x^2 + 2y$"}
