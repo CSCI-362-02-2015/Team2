@@ -202,6 +202,10 @@ def createResults(topParent, saveFile, htmlStr):
                             '$("#mdlOracle_status").text(status);' +
                             '$("#mdlOracle_status").addClass(statusLabel);' +
                         '});' +
+
+                        '$("#mdlOracle").on("hide.bs.modal", function (event) {' + 
+                            '$("#mdlOracle_title").html(\'<span class="font-size-large label" id="mdlOracle_status"></span>\');' + 		
+                        '});' +
                     '</script>' +
                 '</body>' +
             '</html>')
