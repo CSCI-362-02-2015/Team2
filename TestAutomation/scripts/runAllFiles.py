@@ -73,14 +73,14 @@ def runTestCases(topParent, fileNameList, oracleList):
         driver.find_element_by_id("MathInput").send_keys(tc_testVal) #type testcase into box
         driver.find_element_by_id("MathInput").send_keys(Keys.RETURN) #hit enter
         wait_until_load()
-        
+        '''
         driver.get_screenshot_as_file(oracle_path) #save screenshot (oracle_path to save oracles) UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
         tc_result = "Passed" # UNCOMMENT TO SAVE ORACLES, COMMENT TO TEST
         '''
         driver.get_screenshot_as_file(result_path) #save screenshot (result_path to test) UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         oracle_image, result_image = Image.open(oracle_path), Image.open(result_path) # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         tc_result = "Passed" if equal_images(oracle_image, result_image) else "Failed" # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
-        '''
+        
         return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12 txt-align-center"><p id="tc_req{0}"><strong>Requirement: </strong>{3}</p></div></div><div class="row"><div class="col-lg-6 col-lg-offset-3 txt-align-center"><a href="#" class="btn btn-default btn-sm btn" id="tc_oracle{0}" data-toggle="modal" data-target="#mdlOracle" data-img="{5}" data-title="{1}" data-status="{2}">View Test Value and Oracle</a></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_oracle)
 
     driver = webdriver.Firefox()
@@ -197,8 +197,8 @@ def createResults(topParent, saveFile, htmlStr):
                             'var status = button.data("status");' +
                             'var statusLabel = status == "Passed" ? "label-success" : "label-danger";' +
                             '$("#mdlOracle_title").html(title + "&nbsp;&nbsp;&nbsp;" + $("#mdlOracle_title").html());' +
-                            '$("#mdlOracle_img").attr("src", "../oracles/" + img);' +
-                            '$("#mdlTest_img").attr("src", "../temp/testResults/" + img);' +
+                            '$("#mdlOracle_img").attr("src", "../TestAutomation/oracles/" + img);' +
+                            '$("#mdlTest_img").attr("src", "../TestAutomation/temp/testResults/" + img);' +
                             '$("#mdlOracle_status").text(status);' +
                             '$("#mdlOracle_status").addClass(statusLabel);' +
                         '});' +
