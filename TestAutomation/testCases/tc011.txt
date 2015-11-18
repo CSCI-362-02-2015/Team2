@@ -1,1 +1,22 @@
-{"id": "011", "title" : "String, 1 variable equation with positive integer, String", "req": "Must display in line mathMode equation", "testVal": "Hello x + 2 World"}
+{"id": "011”,
+”title" : “String,equations,String 01”,
+"req": “Must convert LaTeX code to MathML”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “Hello x + 2 World”,
+”oracle”: ” <mrow>
+	<mi>H</mi>
+	<mi>e</mi>
+	<mi>l</mi>
+	<mi>l</mi>
+	<mi>o</mi>
+	<mi>x</mi>
+	<mo>+</mo>
+	<mn>2</mn>
+	<mi>W</mi>
+	<mi>o</mi>
+	<mi>r</mi>
+	<mi>l</mi>
+	<mi>d</mi>
+</mrow>
+”}

@@ -1,1 +1,40 @@
-{"id": "021", "title" : "2 variables, 2 exponents, and positive integer", "req": "Must display out of line mathMode equation", "testVal": "x^2 + 2y^2"}
+{"id": "021",
+”title" : “Letters matrix, square parenthesis border “,
+"req": “Must convert LaTeX code to MathML”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “\begin{bmatrix} a & b & c \\ d & e & f \\ g & h & i \end{bmatrix}”,
+”oracle”: ”<mtr>
+			<mtd>
+				<mi>a</mi>
+			</mtd>
+			<mtd>
+				<mi>b</mi>
+			</mtd>
+			<mtd>
+				<mi>c</mi>
+			</mtd>
+		</mtr>
+		<mtr>
+			<mtd>
+				<mi>d</mi>
+			</mtd>
+			<mtd>
+				<mi>e</mi>
+			</mtd>
+			<mtd>
+				<mi>f</mi>
+			</mtd>
+		</mtr>
+		<mtr>
+			<mtd>
+				<mi>g</mi>
+			</mtd>
+			<mtd>
+				<mi>h</mi>
+			</mtd>
+			<mtd>
+				<mi>i</mi>
+			</mtd>
+		</mtr>
+”}

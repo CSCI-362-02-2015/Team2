@@ -1,1 +1,23 @@
-{"id": "013", "title" : "One Variable and Positive Literal", "req": "Must display out of line mathMode equation", "testVal": "x + 2"}
+{"id": "013”,
+”title" : “String,equations,String 03”,
+"req": “Must convert LaTeX code to MathML”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “Hello x + 2y World”,
+”oracle”: ”<mrow>
+	<mi>H</mi>
+	<mi>e</mi>
+	<mi>l</mi>
+	<mi>l</mi>
+	<mi>o</mi>
+	<mi>x</mi>
+	<mo>+</mo>
+	<mn>2</mn>
+	<mi>y</mi>
+	<mi>W</mi>
+	<mi>o</mi>
+	<mi>r</mi>
+	<mi>l</mi>
+	<mi>d</mi>
+</mrow>
+”}

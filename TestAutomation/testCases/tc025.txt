@@ -1,1 +1,14 @@
-{"id": "025", "title" : "String, 3 variable, 1 exponent equation with negative integer String", "req": "Must display out of line mathMode equation", "testVal": "Hello xy - 2x^2 World"}
+{"id": "025”,
+”title" : “3n Root of x”,
+"req": “Must convert LaTeX code to MathML”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “\sqrt[3n] x”,
+”oracle”: ” <mroot>
+		<mi>x</mi>
+		<mrow>
+			<mn>3</mn>
+			<mi>n</mi>
+		</mrow>
+	</mroot>
+”}

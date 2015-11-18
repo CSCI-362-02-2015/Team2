@@ -1,1 +1,26 @@
-{"id": "019", "title" : "2 variables, 1 exponent, and positive integer", "req": "Must display out of line mathMode equation", "testVal": "x^2 + 2y"}
+{"id": "019”,
+”title" : “String,equations,String 09”,
+"req": “Must convert LaTeX code to MathML”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “Hello x^2 - 2y World”,
+”oracle”: ”<mrow>
+	<mi>H</mi>
+	<mi>e</mi>
+	<mi>l</mi>
+	<mi>l</mi>
+	<mi>o</mi>
+	<msup>
+		<mi>x</mi>
+		<mn>2</mn>
+	</msup>
+	<mo>-</mo>
+	<mn>2</mn>
+	<mi>y</mi>
+	<mi>W</mi>
+	<mi>o</mi>
+	<mi>r</mi>
+	<mi>l</mi>
+	<mi>d</mi>
+</mrow>
+”}

@@ -1,1 +1,12 @@
-{"id": "006", "title" : "2 variables and a negative integer", "req": "Must display in line mathMode equation", "testVal": "x^2 - 2y"}
+{"id": "006”,
+”title" : “Equation 006”,
+"req": "Must display in line mathMode equation”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": “x - 2”,
+”oracle”:”<mrow>
+	<mi>x</mi>
+	<mo>-</mo>
+	<mn>2</mn>
+</mrow>
+”}

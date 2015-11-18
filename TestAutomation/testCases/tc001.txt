@@ -1,1 +1,7 @@
-{"id": "001", "title" : "One variable and positive number", "req": "Must display in line mathMode equation", "testVal": "x + 2"}
+{"id": "001”,
+”title" : “Equation 001”,
+"req": "Must display in line mathMode equation”,
+”component”:”tex2Jax”, 
+“method”:”PreProcess”,
+"testVal": "x + 2”,
+”oracle”:”<mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow>”}
