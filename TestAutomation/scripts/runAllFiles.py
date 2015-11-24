@@ -77,10 +77,6 @@ def runTestCases(topParent, fileNameList, oracleList):
         input_box.send_keys(Keys.RETURN) #hit enter
         wait_until_load()
         result = " ".join(output_box.text.encode('unicode-escape').split()).replace("> <", "><").replace("<!-- \u2212 -->","").replace('&ndash;', '-')
-        print tc_oracle
-        print result
-        print tc_oracle == result
-        print "\n"
         tc_result = "Passed" if tc_oracle == result else "Failed" # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         
         def html_to_string(inSTR):
