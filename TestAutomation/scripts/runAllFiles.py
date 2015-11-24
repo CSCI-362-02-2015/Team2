@@ -108,10 +108,13 @@ def runTestCases(topParent, fileNameList, oracleList):
                                         '</div>'+ \
                                     '</div>'+ \
                                     '<div class="row">'+ \
-                                        '<div class="col-lg-6 txt-align-center">'+ \
+                                        '<div class="col-lg-4 txt-align-center">'+ \
                                             '<p id="tc_req{0}"><strong>Test Component:</strong>{5}</p>'+ \
                                         '</div>'+ \
-                                        '<div class="col-lg-6 txt-align-center">'+ \
+                                        '<div class="col-lg-4 txt-align-center">'+ \
+                                            '<p id="tc_req{0}"><strong>Test Value:</strong>{4}</p>'+ \
+                                        '</div>'+ \
+                                        '<div class="col-lg-4 txt-align-center">'+ \
                                             '<p id="tc_req{0}"><strong>Method:</strong>{6}</p>'+ \
                                         '</div>'+ \
                                     '</div>'+ \
