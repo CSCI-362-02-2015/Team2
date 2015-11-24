@@ -1,15 +1,15 @@
-{"id": "007”,
-”title" : “Equation 007”,
-"req": "Must display in line mathMode equation”,
-”component”:”tex2Jax”, 
-“method”:”PreProcess”,
-"testVal": “x^2 - 2”,
-”oracle”:”<mrow>
+{"id": "007",
+"title" : "Equation 007",
+"req": "Must display in line mathMode equation",
+"component":"tex2Jax", 
+"method":"PreProcess",
+"testVal": "x^2 + 2",
+"oracle":"<mrow>
 	<msup>
 		<mi>x</mi>
 		<mn>2</mn>
 	</msup>
-	<mo>-</mo>
+	<mo>+</mo>
 	<mn>2</mn>
 </mrow>
-”}
+"}

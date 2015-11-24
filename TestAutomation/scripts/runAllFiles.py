@@ -56,15 +56,18 @@ def runTestCases(topParent, fileNameList, oracleList):
     def doTest(file_path, file_name):
         data = []
         with open(file_path) as data_file:
-            data = json.load(data_file)
+            text = data_file.read().replace("\n", '').replace("\t", ' ').encode('unicode-escape')
+            # print text
+            data = json.loads(text, strict=False)
         
         tc_id = data["id"]
         tc_title = data["title"]
         tc_req = data["req"]
-	tc_comp = data["component"]
-	tc_method = data["method"]
+        tc_comp = data["component"]
+        tc_method = data["method"]
         tc_testVal = data["testVal"]
-        tc_oracle = data["oracle"]
+        tc_oracle = '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mstyle displaystyle="true" scriptlevel="0"><mrow class="MJX-TeXAtom-ORD">' + data["oracle"][6:] + '</mstyle></math>'
+        tc_oracle  = " ".join(tc_oracle.encode('unicode-escape').split()).replace("> <", "><").replace("\'","\"")
 
         result_path = topParent + "temp/testResults/%s" % tc_oracle
         input_box = driver.find_element_by_id("MathInput")
@@ -73,10 +76,65 @@ def runTestCases(topParent, fileNameList, oracleList):
         input_box.send_keys(tc_testVal) #type testcase into box
         input_box.send_keys(Keys.RETURN) #hit enter
         wait_until_load()
-        result = output_box.text
+        result = " ".join(output_box.text.encode('unicode-escape').split()).replace("> <", "><").replace("<!-- \u2212 -->","").replace('&ndash;', '-')
+        print tc_oracle
+        print result
+        print tc_oracle == result
+        print "\n"
         tc_result = "Passed" if tc_oracle == result else "Failed" # UNCOMMENT TO TEST, COMMENT TO SAVE ORACLES
         
-        return '<div class="accordion-inner" id="tc_{0}"><div class="accordion" id="tcAccordion{0}"><div class="accordion-group"><div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}"><div class="row"><div class="col-lg-3"><p id="tc_id{0}">{0}</p></div><div class="col-lg-6"><p id="tc_title{0}">{1}</p></div><div class="col-lg-3"><p id="tc_status{0}">{2}</p></div></div></a></div><div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse"><div class="accordion-inner divShading-beige" id="tcDetails{0}"><div class="row"><div class="col-lg-12 txt-align-center"><p id="tc_req{0}"><strong>Requirement:</strong>{3}</p></div></div><div class="row"><div class="col-lg-6 txt-align-center"><p id="tc_req{0}"><strong>Test Component:</strong>{5}</p></div><div class="col-lg-6 txt-align-center"><p id="tc_req{0}"><strong>Method:</strong>{6}</p></div></div></div></div></div></div></div>'.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_comp, tc_method)
+        def html_to_string(inSTR):
+            return inSTR.replace('<', '&lt;').replace('>', '&gt;')
+
+        html = '<div class="accordion-inner" id="tc_{0}">'+ \
+                    '<div class="accordion" id="tcAccordion{0}">'+ \
+                        '<div class="accordion-group">' + \
+                            '<div class="accordion-heading">'+ \
+                                '<a class="accordion-toggle" data-toggle="collapse" data-parent="#tcAccordion{0}" href="#tcDetailsPanel{0}">'+ \
+                                    '<div class="row">'+ \
+                                        '<div class="col-lg-3">'+ \
+                                            '<p id="tc_id{0}">{0}</p>'+ \
+                                        '</div>'+ \
+                                        '<div class="col-lg-6">'+ \
+                                            '<p id="tc_title{0}">{1}</p>'+ \
+                                        '</div>'+ \
+                                        '<div class="col-lg-3">'+ \
+                                            '<p id="tc_status{0}">{2}</p>'+ \
+                                        '</div>'+ \
+                                    '</div>'+ \
+                                '</a>'+ \
+                            '</div>'+ \
+                            '<div id="tcDetailsPanel{0}" class="background-color-blanchedalmond accordion-body collapse">'+ \
+                                '<div class="accordion-inner divShading-beige" id="tcDetails{0}">'+ \
+                                    '<div class="row">'+ \
+                                        '<div class="col-lg-12 txt-align-center">'+ \
+                                            '<p id="tc_req{0}"><strong>Requirement:</strong>{3}</p>'+ \
+                                        '</div>'+ \
+                                    '</div>'+ \
+                                    '<div class="row">'+ \
+                                        '<div class="col-lg-6 txt-align-center">'+ \
+                                            '<p id="tc_req{0}"><strong>Test Component:</strong>{5}</p>'+ \
+                                        '</div>'+ \
+                                        '<div class="col-lg-6 txt-align-center">'+ \
+                                            '<p id="tc_req{0}"><strong>Method:</strong>{6}</p>'+ \
+                                        '</div>'+ \
+                                    '</div>'+ \
+                                    '<div class="row">'+ \
+                                        '<div class="col-lg-12">'+ \
+                                            '<p><strong>Oracle:</strong>{7}</p>'+ \
+                                        '</div>'+ \
+                                    '</div>'+ \
+                                    '<div class="row">'+ \
+                                        '<div class="col-lg-12">'+ \
+                                            '<p><strong>Result:</strong>{8}</p>'+ \
+                                        '</div>'+ \
+                                    '</div>'+ \
+                                '</div>'+ \
+                            '</div>'+ \
+                        '</div>'+ \
+                    '</div>'+ \
+                '</div>'
+        return html.format(tc_id, tc_title, tc_result, tc_req, tc_testVal, tc_comp, tc_method, html_to_string("%r"%tc_oracle), html_to_string("%r"%result))
 
     driver = webdriver.Firefox()
     skeleton_file_path = topParent + "project/src/skeleton.html"

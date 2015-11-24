@@ -1,17 +1,17 @@
-{"id": "016”,
-”title" : “String,equations,String 06”,
-"req": “Must convert LaTeX code to MathML”,
-”component”:”tex2Jax”, 
-“method”:”PreProcess”,
-"testVal": “Hello x - 2 World”,
-”oracle”: ”<mrow>
+{"id": "016",
+"title" : "String,equations,String 06",
+"req": "Must convert LaTeX code to MathML",
+"component":"tex2Jax", 
+"method":"PreProcess",
+"testVal": "Hello x + 2 World",
+"oracle": "<mrow>
 	<mi>H</mi>
 	<mi>e</mi>
 	<mi>l</mi>
 	<mi>l</mi>
 	<mi>o</mi>
 	<mi>x</mi>
-	<mo>-</mo>
+	<mo>+</mo>
 	<mn>2</mn>
 	<mi>W</mi>
 	<mi>o</mi>
@@ -19,4 +19,4 @@
 	<mi>l</mi>
 	<mi>d</mi>
 </mrow>
-”}
+"}

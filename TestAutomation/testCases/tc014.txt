@@ -1,10 +1,10 @@
-{"id": "014”,
-”title" : “String,equations,String 04”,
-"req": “Must convert LaTeX code to MathML”,
-”component”:”tex2Jax”, 
-“method”:”PreProcess”,
-"testVal": “Hello x^2 + 2y World”,
-”oracle”: ”<mrow>
+{"id": "014",
+"title" : "String,equations,String 04",
+"req": "Must convert LaTeX code to MathML",
+"component":"tex2Jax", 
+"method":"PreProcess",
+"testVal": "Hello x^2 + 2y World",
+"oracle": "<mrow>
 	<mi>H</mi>
 	<mi>e</mi>
 	<mi>l</mi>
@@ -23,4 +23,4 @@
 	<mi>l</mi>
 	<mi>d</mi>
 </mrow>
-”}
+"}

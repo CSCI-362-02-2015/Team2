@@ -1,13 +1,13 @@
-{"id": "003”,
-”title" : “Equation 003”,
-"req": "Must display in line mathMode equation”,
-”component”:”tex2Jax”, 
-“method”:”PreProcess”,
-"testVal": "x + 2y”,
-”oracle”:”<mrow>
+{"id": "003",
+"title" : "Equation 003",
+"req": "Must display in line mathMode equation",
+"component":"tex2Jax", 
+"method":"PreProcess",
+"testVal": "x + 2y",
+"oracle":"<mrow>
 	<mi>x</mi>
 	<mo>+</mo>
 	<mn>2</mn>
 	<mi>y</mi>
 </mrow>
-”}
+"}

@@ -1,19 +1,19 @@
-{"id": "010”,
-”title" : “Equation 010”,
-"req": “Must convert LaTeX code to MathML”,
-”component”:”tex2Jax”, 
-“method”:”PreProcess”,
-"testVal": “x^2 - 2y^2”,
-”oracle”: ”mrow>
+{"id": "010",
+"title" : "Equation 010",
+"req": "Must convert LaTeX code to MathML",
+"component":"tex2Jax", 
+"method":"PreProcess",
+"testVal": "x^2 + 2y^2",
+"oracle": "<mrow>
 	<msup>
 		<mi>x</mi>
 		<mn>2</mn>
 	</msup>
-	<mo>-</mo>
+	<mo>+</mo>
 	<mn>2</mn>
 	<msup>
 		<mi>y</mi>
 		<mn>2</mn>
 	</msup>
 </mrow>
-”}
+"}
