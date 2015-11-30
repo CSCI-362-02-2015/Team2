@@ -15,8 +15,7 @@ def main():
     saveFile = "testCaseResults_{0}.html".format(getTimeStamp())    
     
     list_testFileNames = getTests(topParent)
-    list_oracleFileNames = getOracles(topParent)
-    htmlStr = runTestCases(topParent, list_testFileNames, list_oracleFileNames)
+    htmlStr = runTestCases(topParent, list_testFileNames)
     createResults(topParent, saveFile, htmlStr)
     openHtml(topParent, saveFile)
 
@@ -38,13 +37,8 @@ def getTests(topParent):
     fileStr = topParent + "testCases"
     return os.listdir(fileStr)
 
-#gets a list of oracle fileNames
-def getOracles(topParent):
-    fileStr = topParent + "oracles"
-    return os.listdir(fileStr)
-
 #calls "doTest()" for testCases and oracles
-def runTestCases(topParent, fileNameList, oracleList):
+def runTestCases(topParent, fileNameList):
     def wait_until_load():
         def page_has_loaded(): return driver.execute_script('return document.readyState;') == 'complete'
         time.sleep(1)
