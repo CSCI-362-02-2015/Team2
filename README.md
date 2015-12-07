@@ -10,7 +10,7 @@ MathJax is a crossbrowser display engine for mathematics written in Javascript. 
 ##*Steps To Test*
 1. Install Python on the testing system. The [Python vers. 3.4.3](https://www.python.org/downloads/release/python-343/) installer can be found at the main Python website.
 2. Install Selenium on the testing system. This can be done by running the command "pip install selenium", if python is in your system path environment variable.
-  * if pip is not yet installed on the system, download and run this python file to get the pip python package installer, https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py 
+  * if pip is not yet installed on the system, download and run this python file to get the pip python package installer, [get-pip.py](https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py).
 3. The Python driver file is found in the [../TestAutomation/Scripts](https://github.com/CSCI-362-02-2015/Team2/tree/master/TestAutomation/scripts) folder. This is the file that should be run from command line.
 
 
