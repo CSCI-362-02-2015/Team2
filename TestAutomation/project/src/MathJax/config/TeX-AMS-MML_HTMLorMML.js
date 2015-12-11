@@ -4180,7 +4180,7 @@ MathJax.ElementJax.mml.Augment({
     });
     a.mfrac = a.mbase.Subclass({
         //FAULTFAULT
-        // type: "mfrac-fault",
+        //type: "mfrac-fault",
         //END FAULTFAULT
         type: "mfrac",
         num: 0,
@@ -4227,7 +4227,7 @@ MathJax.ElementJax.mml.Augment({
     });
     a.mroot = a.mbase.Subclass({
         //FAULTFAULT
-        // type: "mroot-fault",
+        //type: "mroot-fault",
         //END FAULTFAULT
         type: "mroot",
         linebreakContainer: true,
@@ -4547,7 +4547,7 @@ MathJax.ElementJax.mml.Augment({
     });
     a.mover = a.munderover.Subclass({
         //FAULTFAULT
-        // type: "mover-fault",
+        //type: "mover-fault",
         //END FAULTFAULT
         type: "mover",
         over: 1,
@@ -4632,7 +4632,7 @@ MathJax.ElementJax.mml.Augment({
     });
     a.mtr = a.mbase.Subclass({
         //FAULTFAULT
-        // type: "mtr-fault",
+        //type: "mtr-fault",
         //END FAULTFAULT
         type: "mtr",
         defaults: {
